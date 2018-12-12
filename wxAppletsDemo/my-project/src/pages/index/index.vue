@@ -18,7 +18,11 @@
       <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
       <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
     </form>
+<<<<<<< HEAD
     <a href="/pages/counter/main" class="counter">去往V213uex示例fdsf页面</a>
+=======
+    <a href="/pages/counter/main" class="counter">去往V213uex示例页面</a>
+>>>>>>> f457be5706db761a346840b9e1ca3d74aa6c0a06
   </div>
 </template>
 
