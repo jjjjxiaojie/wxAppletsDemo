@@ -18,7 +18,7 @@
       <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
       <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
     </form>
-    <a href="/pages/counter/main" class="counter">去往V213uex示例fdsf页面</a>
+    <a href="/pages/counter/main" class="counter">去往vuex示例页面</a>
   </div>
 </template>
 
@@ -49,6 +49,7 @@ export default {
           wx.getUserInfo({
             success: (res) => {
               this.userInfo = res.userInfo
+              console.log(this.userInfo)
             }
           })
         }
