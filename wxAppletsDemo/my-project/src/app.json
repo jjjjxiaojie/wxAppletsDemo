@@ -1,14 +1,44 @@
 {
   "pages": [
     "pages/index/main",
-    "pages/logs/main",
-    "pages/counter/main",
-    "pages/YanLanTest/main"
+    "pages/product/main",
+    "pages/theme/main",
+    "pages/my/main",
+    "pages/cart/main",
+    "pages/category/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarBackgroundColor": "#EEE8AB",
+    "navigationBarTitleText": "YanLan",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar":{
+    "list":[{
+        "pagePath":"pages/index/main",
+        "iconPath":"/static/imgs/toolbar/home.png",
+        "selectedIconPath":"/static/imgs/toolbar/home@selected.png",
+        "text":"主页"
+      },{
+        "pagePath":"pages/category/main",
+        "iconPath":"/static/imgs/toolbar/category.png",
+        "selectedIconPath":"/static/imgs/toolbar/category@selected.png",
+        "text":"分类"
+      },{
+        "pagePath":"pages/cart/main",
+        "iconPath":"/static/imgs/toolbar/cart.png",
+        "selectedIconPath":"/static/imgs/toolbar/cart@selected.png",
+        "text":"购物车"
+      },{
+        "pagePath":"pages/my/main",
+        "iconPath":"/static/imgs/toolbar/my.png",
+        "selectedIconPath":"/static/imgs/toolbar/my@selected.png",
+        "text":"我的"
+      }],
+      "backgroundColor": "#F5F5F5",
+      "selectedColor": "#AB956D",
+      "color": "#989898",
+      "borderStyle": "white",
+      "position":"bottom"
   }
 }

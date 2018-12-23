@@ -143,4 +143,3 @@ if (process.env.PLATFORM === 'swan') {
 }
 
 module.exports = baseWebpackConfig
-

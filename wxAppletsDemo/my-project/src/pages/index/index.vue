@@ -1,106 +1,160 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
-
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
+<div class="container">
+  <div class="banner">
+    <swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration" :circular="circular"  >
+      <div v-for="item in bannerList" :key="item.img_id">
+        <swiper-item>
+          <image :src="'/static/imgs/' + item.url" class="slide-image"  @click="product(item.key_word)" />
+        </swiper-item>
       </div>
-    </div>
-
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-    <a href="/pages/counter/main" class="counter">去往vuex示例页面</a>
+    </swiper>
   </div>
+
+  <div class="home-main-theme">
+    <div class="home-main-header">精选主题</div>
+    <div class="theme-box">
+        <block v-for="theme in themeList" :key="theme.topic_img_id">
+            <div v-if="theme.index==2" class="theme-item big" @click="onThemesItemTap"  v-model="theme.name">
+                <image :src="'/static/imgs' + theme.url"></image>
+            </div>
+            <div v-else class="theme-item" @click="onThemesItemTap"  v-model="theme.name">
+                <image :src="'/static/imgs' + theme.url"></image>
+            </div>
+        </block>
+    </div>
+    <div class="home-main-products">
+      <div class="home-main-header">最近新品</div>
+      <products :productInfoList="productInfoList"></products>
+  </div>
+  </div>
+</div>
 </template>
 
 <script>
-import card from '@/components/card'
-
+import {
+  Home
+} from './index-model.js'
+import products from '../tpls/products/index.vue'
 export default {
+  components: {
+    products
+  },
   data () {
     return {
-      motto: 'Hello World',
-      userInfo: {}
+      kkk: '123456789',
+      indicatorDots: true,
+      autoplay: true,
+      interval: 5000,
+      duration: 900,
+      circular: true,
+      themeList: [],
+      bannerList: [],
+      productInfoList: []
     }
   },
-
-  components: {
-    card
-  },
-
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
+    onThemesItemTap () {
     },
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-              console.log(this.userInfo)
-            }
-          })
-        }
+    product (res) {
+      wx.navigateTo({
+        url: '../product/main?productId=' + res
       })
     },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
+    dataInit () {
+      var home = new Home()
+      home.getBannerData((res) => {
+        this.bannerList = res.data.info
+      })
+      home.getThemeData((res) => {
+        this.themeList = res.data.info
+      })
+      home.getProductList((res) => {
+        this.productInfoList = res.data.info
+      })
     }
   },
-
   created () {
-    // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
+    this.dataInit()
   }
 }
 </script>
-
+@import "../tpls/base.wxss"
+@import "../tpls/products/products-tpl.wxss"
 <style scoped>
-.userinfo {
+.index {
+  font-size: 75px
+}
+.swiper{
+  height: 180px
+}
+.slide-image {
+  width: 100%;
+  height: 100%;
+}
+.banner {
+}
+.banner-item{
+  height: 100%;
+  width: 100%;
+}
+.banner-item image{
+  height: 100%;
+  width: 100%;
+}
+
+.home-main-header{
   display: flex;
-  flex-direction: column;
+  height: 60rpx;
+  color: #AB956D;
+  background-color: #fff;
+  font-size: 32rpx;
   align-items: center;
+  justify-content: center;
+  margin: 20rpx 0;
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+.home-main-theme{
+  /*margin: 20rpx 0;*/
 }
-
-.userinfo-nickname {
-  color: #aaa;
+.theme-box{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
 }
-
-.usermotto {
-  margin-top: 150px;
+.theme-item{
+  display: flex;
+  height:375rpx;
+  width: 50%;
+  border-bottom: 4rpx solid #fff;
+  position: relative;
+  box-sizing: border-box;
 }
-
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
+.theme-item:first-child{
+  border-right:4rpx solid #fff;
 }
-
-.counter {
-  display: inline-block;
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
+.theme-item.big{
+  width: 100%;
+}
+.theme-item.big .theme-icon view{
+  margin: 0 auto;
+  width: 150rpx;
+  height: 60rpx;
+  border-radius: 60rpx;
+  line-height: 60rpx;
+  border:1rpx solid #fff;
+  text-align: center;
+  font-size: 24rpx;
+}
+.theme-item image{
+  height: 100%;
+  width: 100%;
+}
+.theme-icon{
+  margin-top:10rpx;
+  height: 48rpx;
+}
+.theme-icon image{
+  height: 48rpx;
+  width: 48rpx;
 }
 </style>
